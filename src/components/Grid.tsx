@@ -1,6 +1,6 @@
 import React from 'react';
-import type {AStarState, GridNode} from "../types";
-import {gridFunc} from "../utils/grid.ts";
+import type { AStarState, GridNode } from "../types";
+import { gridUtils } from "../utils/grid.ts";
 
 interface GridProps {
     astarState: AStarState;
@@ -20,16 +20,16 @@ const Grid: React.FC<GridProps> = (
         if (node.type == 'end') return 'bg-red-500';
         if (node.type == 'wall') return 'bg-gray-800';
 
-        if (astarState.path.some(p => gridFunc.positionEquals(p, { row, col })))
+        if (astarState.path.some(p => gridUtils.positionEquals(p, { row, col })))
             return 'bg-yellow-400';
 
-        if (astarState.current && gridFunc.positionEquals(astarState.current, { row, col }))
+        if (astarState.current && gridUtils.positionEquals(astarState.current, { row, col }))
             return 'bg-purple-500 animate-pulse';
 
-        if (astarState.closedSet.some(p => gridFunc.positionEquals(p, { row, col })))
+        if (astarState.closedSet.some(p => gridUtils.positionEquals(p, { row, col })))
             return 'bg-red-200';
 
-        if (astarState.openSet.some(p => gridFunc.positionEquals(p, { row, col })))
+        if (astarState.openSet.some(p => gridUtils.positionEquals(p, { row, col })))
             return 'bg-green-200';
 
         return 'bg-gray-100';

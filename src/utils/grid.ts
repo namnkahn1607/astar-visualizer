@@ -1,6 +1,6 @@
 import type { GridNode, NodeType, Position } from "../types";
 
-const gridFunc = {
+const gridUtils = {
     createNode: (
         row: number, col: number, type: NodeType = 'empty'
     ): GridNode => ({
@@ -16,7 +16,7 @@ const gridFunc = {
             grid[i] = [];
 
             for (let j = 0; j < cols; ++j) {
-                grid[i][j] = gridFunc.createNode(i, j);
+                grid[i][j] = gridUtils.createNode(i, j);
             }
         }
 
@@ -60,8 +60,12 @@ const gridFunc = {
     },
 
     findPosition: (positions: Array<Position>, target: Position): number => {
-        return positions.findIndex(p => gridFunc.positionEquals(p, target));
+        return positions.findIndex(p => gridUtils.positionEquals(p, target));
+    },
+
+    positionToKey(pos: Position) {
+        return `${pos.row},${pos.col}`;
     }
 };
 
-export { gridFunc };
+export { gridUtils };

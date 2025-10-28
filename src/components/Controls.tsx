@@ -1,5 +1,5 @@
 import React from "react";
-import {Pause, Play, RotateCcw, Zap} from "lucide-react";
+import { Pause, Play, RotateCcw, Zap } from "lucide-react";
 
 interface ControlsProps {
     isRunning: boolean;
