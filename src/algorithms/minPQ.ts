@@ -1,15 +1,15 @@
 class MinPriorityQueue<T> {
     private readonly heap: Array<T>;
-    private readonly compareFn: (a: T, b: T) => number;
+    private readonly priorityFn: (a: T) => number;
     private readonly keyFn: (a: T) => string;
     private readonly posMap = new Map<string, number>();
 
     constructor(
-        compareFn: (a: T, b: T) => number,
+        priorityFn: (a: T) => number,
         keyFn: (a: T) => string,
         arr: Array<T> = []
     ) {
-        this.compareFn = compareFn;
+        this.priorityFn = priorityFn;
         this.keyFn = keyFn;
         this.heap = arr;
 
@@ -90,12 +90,12 @@ class MinPriorityQueue<T> {
 
     private bubbleUp(i: number) {
         const heap = this.heap;
-        const cmp = this.compareFn;
+        const priority = this.priorityFn;
 
         while (i > 0) {
             const parent = Math.floor((i - 1) / 2);
 
-            if (cmp(heap[i], heap[parent]) < 0) {
+            if (priority(heap[i]) < priority(heap[parent])) {
                 this.swap(i, parent);
                 i = parent;
             } else {
@@ -106,7 +106,7 @@ class MinPriorityQueue<T> {
 
     private bubbleDown(i: number) {
         const heap = this.heap;
-        const cmp = this.compareFn;
+        const priority = this.priorityFn;
         const size = this.size();
 
         while (2 * i + 1 < size) {
@@ -114,12 +114,12 @@ class MinPriorityQueue<T> {
             const right = 2 * i + 2;
             let min = left;
 
-            if (right < size && cmp(heap[right], heap[min]) < 0) {
+            if (right < size && priority(heap[right]) < priority(heap[min])) {
                 min = right;
             }
 
-            if (cmp(heap[i], heap[min]) > 0) {
-                this.swap(i, min); // Use swap helper
+            if (priority(heap[i]) > priority(heap[min])) {
+                this.swap(i, min);
                 i = min;
             } else {
                 return;

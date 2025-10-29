@@ -22,12 +22,4 @@ interface AStarState {
     finished: boolean;
 }
 
-interface GridProps {
-    astarState: AStarState;
-    grid: GridNode[][];
-    onCellClick: (row: number, col: number) => void;
-    onCellDrag: (row: number, col: number) => void;
-    isDrawing: boolean;
-}
-
-export type { AStarState, GridNode, GridProps, NodeType, Position };
+export type { AStarState, GridNode, NodeType, Position };
