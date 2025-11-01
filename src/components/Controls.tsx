@@ -5,31 +5,22 @@ interface ControlsProps {
     isRunning: boolean;
     isFinished: boolean;
     speed: number;
-    heuristic: 'manhattan' | 'euclidean' | 'diagonal';
+    heuristic: 'manhattan' | 'euclidean' | 'chebyshev';
     allowDiagonal: boolean;
     onStart: () => void;
     onPause: () => void;
     onReset: () => void;
     onSpeedChange: (speed: number) => void;
-    onHeuristicChange: (heuristic: 'manhattan' | 'euclidean' | 'diagonal') => void;
+    onHeuristicChange: (heuristic: 'manhattan' | 'euclidean' | 'chebyshev') => void;
     onDiagonalToggle: () => void;
     onInstantSolve: () => void;
 }
 
-const Controls: React.FC<ControlsProps> = ({
-                                               isRunning,
-                                               isFinished,
-                                               speed,
-                                               heuristic,
-                                               allowDiagonal,
-                                               onStart,
-                                               onPause,
-                                               onReset,
-                                               onSpeedChange,
-                                               onHeuristicChange,
-                                               onDiagonalToggle,
-                                               onInstantSolve
-                                           }) => {
+const Controls: React.FC<ControlsProps> = (
+    {
+        isRunning, isFinished, speed, heuristic, allowDiagonal, onStart, onPause,
+        onReset, onSpeedChange, onHeuristicChange, onDiagonalToggle, onInstantSolve
+    }) => {
     return (
         <div className="space-y-4 p-6 bg-white rounded-lg shadow-lg">
             <div className="flex gap-2">
@@ -87,7 +78,7 @@ const Controls: React.FC<ControlsProps> = ({
                 >
                     <option value="manhattan">Manhattan Distance</option>
                     <option value="euclidean">Euclidean Distance</option>
-                    <option value="diagonal">Diagonal Distance</option>
+                    <option value="chebyshev">Chebyshev Distance</option>
                 </select>
             </div>
 

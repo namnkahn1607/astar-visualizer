@@ -5,7 +5,7 @@ import { MinPriorityQueue } from "./minPQ.ts";
 class AStar {
     shortestPath(
         grid: string[][], start: number[], end: number[]
-    ): number[][] {
+    ): { path: number[][], found: boolean } {
         const distance = (a: number[]) =>
             Math.abs(a[0] - end[0]) + Math.abs(a[1] - end[1]);
 
@@ -30,7 +30,7 @@ class AStar {
 
             // check if reached goal
             if (distance(curr) === 0)
-                return this.reconstructPath(parents, curr);
+                return { path: this.reconstructPath(parents, curr), found: true };
 
             // not the goal cell -> close it, avoid circular path
             closed.add(currKey);
@@ -39,13 +39,11 @@ class AStar {
                 const [newR, newC] = [curr[0] + dR, curr[1] + dC];
                 const neiKey = toKey([newR, newC]);
 
-                // out of matrix or blocked cell -> skip
+                // out of matrix or blocked/closed neighbor -> skip
                 if (newR < 0 || newR >= ROW ||
-                    newC < 0 || newC >= COL || grid[newR][newC] !== '0')
+                    newC < 0 || newC >= COL ||
+                    grid[newR][newC] !== '0' || closed.has(neiKey))
                     continue;
-
-                // closed neighbor -> skip
-                if (closed.has(neiKey)) continue;
 
                 // new G cost for every neighbor
                 const accumulateG = gCost.get(currKey)! + 1;
@@ -66,7 +64,7 @@ class AStar {
             }
         }
 
-        return [[-1, -1]];
+        return { path: [], found: false };
     }
 
     private reconstructPath(
@@ -88,7 +86,7 @@ class AStar {
     shortestDist(
         grid: string[][], start: number[], end: number[]
     ): number {
-        return this.shortestPath(grid, start, end).length - 1;
+        return this.shortestPath(grid, start, end).path.length - 1;
     }
 
     public static run(): void {
@@ -106,11 +104,11 @@ class AStar {
         const end: number[] = [ROW - 1, COL - 1];
 
         const dist = new AStar().shortestDist(grid, start, end);
-        const path = new AStar().shortestPath(grid, start, end);
+        const { path, found } = new AStar().shortestPath(grid, start, end);
 
         console.log('Shortest distance:', dist);
 
-        if (path[0][0] == -1 && path[0][1] == -1) {
+        if (!found) {
             console.log('No path found!');
             return;
         }

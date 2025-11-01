@@ -9,7 +9,7 @@ const heuristics = {
         return Math.sqrt((a.row - b.row) ** 2 + (a.col - b.col) ** 2);
     },
 
-    diagonal: (a: Position, b: Position) => {
+    chebyshev: (a: Position, b: Position) => {
         const dx = Math.abs(a.row - b.row);
         const dy = Math.abs(a.col - b.col);
 

@@ -15,7 +15,7 @@ class AStarAlgorithm {
 
     constructor(
         grid: GridNode[][], start: Position, end: Position,
-        heuristicType: 'manhattan' | 'euclidean' | 'diagonal' = 'manhattan',
+        heuristicType: 'manhattan' | 'euclidean' | 'chebyshev' = 'manhattan',
         allowDiagonal: boolean = false
     ) {
         this.grid = JSON.parse(JSON.stringify(grid));

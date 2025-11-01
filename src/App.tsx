@@ -32,7 +32,7 @@ const App: React.FC = () => {
     const [isRunning, setIsRunning] = useState(false);
     const [speed, setSpeed] = useState(50);
     const [heuristic, setHeuristic] = useState<
-        'manhattan' | 'euclidean' | 'diagonal'>('manhattan');
+        'manhattan' | 'euclidean' | 'chebyshev'>('manhattan');
     const [allowDiagonal, setAllowDiagonal] = useState(false);
     const [isDrawing, setIsDrawing] = useState(false);
 
